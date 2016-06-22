@@ -25,3 +25,6 @@ C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataVa
 C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataValidator.exe
 C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataValidator.pdb
 C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataValidator.csprojResolveAssemblyReference.cache
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.exe.config
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.exe
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.pdb
