@@ -11,7 +11,7 @@ namespace DataValidator
         public string Customer { get; set; }
         public string Name { get; set; }
         public string MUP { get; set; }
-        public string EpmMUP { get; set; }
+        public string SWDMUP { get; set; }
 
     }
 }

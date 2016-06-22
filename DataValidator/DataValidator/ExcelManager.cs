@@ -53,11 +53,60 @@ namespace DataValidator
                                     Atm atm = new Atm();
                                     if (customer != null) atm.Customer = customer.ToString();
                                     if (atmName != null) atm.Name = atmName.ToString();
-                                    if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);
+                                    if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);                                   
                                     atms.Add(atm);
                                 }
                             }
                             
+                        }
+                    }
+                }
+            }
+            return atms;
+        }
+
+        internal static List<Atm> ImprortAtmDataFromSCCMReport(string filePath)
+        {
+            List<Atm> atms = new List<Atm>();
+
+            // Get the file we are going to process
+            var existingFile = new FileInfo(filePath);
+            // Open and read the XlSX file.
+            using (var package = new ExcelPackage(existingFile))
+            {
+                // Get the work book in the file
+                var workBook = package.Workbook;
+                if (workBook != null)
+                {
+                    if (workBook.Worksheets.Count > 0)
+                    {
+                        // Get the inventory worksheet
+                        var worksheet = workBook.Worksheets["SCCM"];
+
+                        // read some data
+                        object col1Header = worksheet.Cells[1, 1].Value;
+
+                        int rows = worksheet.Dimension.Rows;
+                        for (int i = 2; i <= rows; i++)
+                        {
+                            var customer = worksheet.Cells[i, 5].Value;
+                            var atmName = worksheet.Cells[i, 1].Value;
+                            var software = worksheet.Cells[i, 3].Value; // for SCCM it pulls InstallTime0 column
+                            var version = worksheet.Cells[i, 4].Value;
+                            var date = worksheet.Cells[i, 2].Value;
+
+                            if (software != null)
+                            {
+                                if (!atms.Exists(x => x.Name == atmName.ToString()))
+                                {
+                                    Atm atm = new Atm();
+                                    if (customer != null) atm.Customer = customer.ToString();
+                                    if (atmName != null) atm.Name = atmName.ToString();
+                                    if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);                                    
+                                    atms.Add(atm);
+                                }
+                            }
+
                         }
                     }
                 }
@@ -98,7 +147,7 @@ namespace DataValidator
                                 Atm atm = new Atm();
                                 if (customer != null) atm.Customer = customer.ToString();
                                 if (atmName != null) atm.Name = atmName.ToString();
-                                if (version != null) atm.AptraCD2Version = version.ToString();
+                                if (version != null) atm.AptraCD2Version = version.ToString(); // Dusan debug
                                 atms.Add(atm);
                             }
 

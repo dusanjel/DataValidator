@@ -16,16 +16,17 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Background="Gray">
-            <Button Margin="10" Width="60" Command="{Binding Path=ImportEpmReportCommand}">Import</Button>
-            <Button Margin="10" Width="60" Command="{Binding Path=ExportReportCommand}">Export</Button>
-
+            <Button Margin="10" Width="80" Command="{Binding Path=ImportEpmReportCommand}">Import EPM</Button>
+            <Button Margin="10" Width="80" Command="{Binding Path=ImportSCCMReportCommand}">Import SCCM</Button>
+            <Button Margin="10" Width="80" Command="{Binding Path=ExportReportCommand}">Export</Button>
+            
         </StackPanel>
         <ListView x:Name="atms" Grid.Row="1" SelectionMode="Single" ItemsSource="{Binding DifferentAtms, Mode= OneWay, UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Customer" Width="100" DisplayMemberBinding="{Binding Customer}" />
                     <GridViewColumn Header="Name" Width="50" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="EpmMUP" Width="100" DisplayMemberBinding="{Binding EpmMUP}" />
+                    <GridViewColumn Header="SWDMUP" Width="100" DisplayMemberBinding="{Binding SWDMUP}" />
                     <GridViewColumn Header="MUP" Width="100" DisplayMemberBinding="{Binding MUP}" />
                 </GridView>
             </ListView.View>
