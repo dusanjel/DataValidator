@@ -53,43 +53,51 @@ namespace DataValidator
 
         public void ImportSCCMReportExecuted()
         {
-            this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
-            var SCCMAtms = ExcelManager.ImprortAtmDataFromSCCMReport(@"C:\SCCM.xlsx");
-            var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
-            SWDTool = "DifferentMUPSCCM";
-
-            bool exist = false;
-
-            //compare
-            foreach (var SCCM in SCCMAtms)
+            try
             {
-                foreach (var site in siteAtms)
+                this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
+                var SCCMAtms = ExcelManager.ImprortAtmDataFromSCCMReport(@"C:\SCCM.xlsx");
+                var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
+                SWDTool = "DifferentMUPSCCM";
+
+                bool exist = false;
+
+                //compare
+                foreach (var SCCM in SCCMAtms)
                 {
-                    if (String.Equals(SCCM.Name, site.Name, StringComparison.CurrentCultureIgnoreCase))
+                    foreach (var site in siteAtms)
                     {
-                        exist = true;
-                        if (!String.Equals(SCCM.AptraCD2Version, site.AptraCD2Version, StringComparison.CurrentCultureIgnoreCase))
+                        if (String.Equals(SCCM.Name, site.Name, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            this.DifferentAtms.Add(new ComparedAtms() { Name = SCCM.Name, Customer = SCCM.Customer, SWDMUP = SCCM.AptraCD2Version, MUP = site.AptraCD2Version });
+                            exist = true;
+                            if (!String.Equals(SCCM.AptraCD2Version, site.AptraCD2Version, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                this.DifferentAtms.Add(new ComparedAtms() { Name = SCCM.Name, Customer = SCCM.Customer, SWDMUP = SCCM.AptraCD2Version, MUP = site.AptraCD2Version });
+                            }
+                            break;
                         }
-                        break;
                     }
+
+                    if (exist == false)
+                    {
+                        NotExistAtms.Add(SCCM);
+                    }
+                    else
+                    {
+                        exist = false;
+                    }
+
                 }
 
-                if (exist == false)
-                {
-                    NotExistAtms.Add(SCCM);
-                }
-                else
-                {
-                    exist = false;
-                }
-
+                var list = this.DifferentAtms.ToList<ComparedAtms>();
+                var dataTable = ExcelManager.ConvertListToDataTable(list);
+                ExcelManager.ExportDataToExcel(SWDTool, dataTable, new System.IO.DirectoryInfo(@"C:\"));
             }
+            catch (Exception ex)
+            {
 
-            var list = this.DifferentAtms.ToList<ComparedAtms>();
-            var dataTable = ExcelManager.ConvertListToDataTable(list);
-            ExcelManager.ExportDataToExcel(SWDTool, dataTable, new System.IO.DirectoryInfo(@"C:\"));
+                throw ex;
+            }
         }
 
         #endregion
@@ -115,43 +123,51 @@ namespace DataValidator
 
         public void ImportEpmReportExecuted()
         {
-            this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
-            var epmAtms = ExcelManager.ImprortAtmDataFromEpmReport(@"C:\EPM.xlsx");
-            var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
-            SWDTool = "DifferentMUPEpm";
-
-            bool exist = false;
-
-            //compare
-            foreach (var epm in epmAtms)
+            try
             {
-                foreach (var site in siteAtms)
+                this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
+                var epmAtms = ExcelManager.ImprortAtmDataFromEpmReport(@"C:\EPM.xlsx");
+                var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
+                SWDTool = "DifferentMUPEpm";
+
+                bool exist = false;
+
+                //compare
+                foreach (var epm in epmAtms)
                 {
-                    if (String.Equals(epm.Name, site.Name, StringComparison.CurrentCultureIgnoreCase))
+                    foreach (var site in siteAtms)
                     {
-                        exist = true; 
-                        if (!String.Equals(epm.AptraCD2Version, site.AptraCD2Version, StringComparison.CurrentCultureIgnoreCase))
+                        if (String.Equals(epm.Name, site.Name, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            this.DifferentAtms.Add(new ComparedAtms() { Name = epm.Name, Customer = epm.Customer, SWDMUP = epm.AptraCD2Version, MUP = site.AptraCD2Version});
+                            exist = true;
+                            if (!String.Equals(epm.AptraCD2Version, site.AptraCD2Version, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                this.DifferentAtms.Add(new ComparedAtms() { Name = epm.Name, Customer = epm.Customer, SWDMUP = epm.AptraCD2Version, MUP = site.AptraCD2Version });
+                            }
+                            break;
                         }
-                        break;
                     }
+
+                    if (exist == false)
+                    {
+                        NotExistAtms.Add(epm);
+                    }
+                    else
+                    {
+                        exist = false;
+                    }
+
                 }
 
-                if (exist == false)
-                {
-                    NotExistAtms.Add(epm);
-                }
-                else
-                {
-                    exist = false;
-                }
-                
+                var list = this.DifferentAtms.ToList<ComparedAtms>();
+                var dataTable = ExcelManager.ConvertListToDataTable(list);
+                ExcelManager.ExportDataToExcel(SWDTool, dataTable, new System.IO.DirectoryInfo(@"C:\"));
             }
+            catch (Exception ex)
+            {
 
-            var list = this.DifferentAtms.ToList<ComparedAtms>();
-            var dataTable = ExcelManager.ConvertListToDataTable(list);
-            ExcelManager.ExportDataToExcel(SWDTool, dataTable, new System.IO.DirectoryInfo(@"C:\"));
+                throw ex;
+            }
         }
 
         #endregion
@@ -177,25 +193,33 @@ namespace DataValidator
 
         public void ExportReportExecuted()
         {
-            var list1 = this.DifferentAtms.ToList<ComparedAtms>();
-            var dataTable1 = ExcelManager.ConvertListToDataTable(list1);
-            ExcelManager.ExportDataToExcel(SWDTool, dataTable1, new System.IO.DirectoryInfo(@"C:\"));
-
-            MessageBox.Show(SWDTool+@".xlsx exported to c:\");
-
-            var list2 = this.NotExistAtms.ToList<Atm>();
-            var dataTable2 = ExcelManager.ConvertListToDataTable(list2);
-            
-
-            if (SWDTool == "DifferentMUPEpm")
+            try
             {
-                ExcelManager.ExportDataToExcel("NotExistAtmsEpm", dataTable2, new System.IO.DirectoryInfo(@"C:\"));
-                MessageBox.Show(@"NotExistAtmsEpm.xlsx exported to c:\");
+                var list1 = this.DifferentAtms.ToList<ComparedAtms>();
+                var dataTable1 = ExcelManager.ConvertListToDataTable(list1);
+                ExcelManager.ExportDataToExcel(SWDTool, dataTable1, new System.IO.DirectoryInfo(@"C:\"));
+
+                MessageBox.Show(SWDTool + @".xlsx exported to c:\");
+
+                var list2 = this.NotExistAtms.ToList<Atm>();
+                var dataTable2 = ExcelManager.ConvertListToDataTable(list2);
+
+
+                if (SWDTool == "DifferentMUPEpm")
+                {
+                    ExcelManager.ExportDataToExcel("NotExistAtmsEpm", dataTable2, new System.IO.DirectoryInfo(@"C:\"));
+                    MessageBox.Show(@"NotExistAtmsEpm.xlsx exported to c:\");
+                }
+                else if (SWDTool == "DifferentMUPSCCM")
+                {
+                    ExcelManager.ExportDataToExcel("NotExistAtmsSCCM", dataTable2, new System.IO.DirectoryInfo(@"C:\"));
+                    MessageBox.Show(@"NotExistAtmsSCCM.xlsx exported to c:\");
+                }
             }
-            else if (SWDTool == "DifferentMUPSCCM")
+            catch (Exception ex)
             {
-                ExcelManager.ExportDataToExcel("NotExistAtmsSCCM", dataTable2, new System.IO.DirectoryInfo(@"C:\"));
-                MessageBox.Show(@"NotExistAtmsSCCM.xlsx exported to c:\");
+
+                throw ex;
             }
         }
 

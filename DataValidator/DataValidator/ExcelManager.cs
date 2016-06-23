@@ -18,204 +18,234 @@ namespace DataValidator
     {
         public static List<Atm> ImprortAtmDataFromEpmReport(string filePath)
         {
-            List<Atm> atms = new List<Atm>();
-
-            // Get the file we are going to process
-            var existingFile = new FileInfo(filePath);
-            // Open and read the XlSX file.
-            using (var package = new ExcelPackage(existingFile))
+            try
             {
-                // Get the work book in the file
-                var workBook = package.Workbook;
-                if (workBook != null)
+                List<Atm> atms = new List<Atm>();
+
+                // Get the file we are going to process
+                var existingFile = new FileInfo(filePath);
+                // Open and read the XlSX file.
+                using (var package = new ExcelPackage(existingFile))
                 {
-                    if (workBook.Worksheets.Count > 0)
+                    // Get the work book in the file
+                    var workBook = package.Workbook;
+                    if (workBook != null)
                     {
-                        // Get the inventory worksheet
-                        var worksheet = workBook.Worksheets["Inventory Report"];
-
-                        // read some data
-                        object col1Header = worksheet.Cells[1, 1].Value;
-
-                        int rows = worksheet.Dimension.Rows;
-                        for (int i = 2; i <= rows; i++)
+                        if (workBook.Worksheets.Count > 0)
                         {
-                            var customer = worksheet.Cells[i, 1].Value;
-                            var atmName = worksheet.Cells[i, 2].Value;
-                            var software = worksheet.Cells[i, 3].Value;
-                            var version = worksheet.Cells[i, 4].Value;
-                            var date = worksheet.Cells[i, 5].Value;
+                            // Get the inventory worksheet
+                            var worksheet = workBook.Worksheets["Inventory Report"];
 
-                            if(software != null && software.ToString() == "StandardBase-CD2-MUP")
+                            // read some data
+                            object col1Header = worksheet.Cells[1, 1].Value;
+
+                            int rows = worksheet.Dimension.Rows;
+                            for (int i = 2; i <= rows; i++)
                             {
-                                if (!atms.Exists(x => x.Name == atmName.ToString()))
+                                var customer = worksheet.Cells[i, 1].Value;
+                                var atmName = worksheet.Cells[i, 2].Value;
+                                var software = worksheet.Cells[i, 3].Value;
+                                var version = worksheet.Cells[i, 4].Value;
+                                var date = worksheet.Cells[i, 5].Value;
+
+                                if (software != null && software.ToString() == "StandardBase-CD2-MUP")
                                 {
-                                    Atm atm = new Atm();
-                                    if (customer != null) atm.Customer = customer.ToString();
-                                    if (atmName != null) atm.Name = atmName.ToString();
-                                    if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);                                   
-                                    atms.Add(atm);
+                                    if (!atms.Exists(x => x.Name == atmName.ToString()))
+                                    {
+                                        Atm atm = new Atm();
+                                        if (customer != null) atm.Customer = customer.ToString();
+                                        if (atmName != null) atm.Name = atmName.ToString();
+                                        if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);
+                                        atms.Add(atm);
+                                    }
                                 }
+
                             }
-                            
                         }
                     }
                 }
+                return atms;
             }
-            return atms;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         internal static List<Atm> ImprortAtmDataFromSCCMReport(string filePath)
         {
-            List<Atm> atms = new List<Atm>();
-
-            // Get the file we are going to process
-            var existingFile = new FileInfo(filePath);
-            // Open and read the XlSX file.
-            using (var package = new ExcelPackage(existingFile))
+            try
             {
-                // Get the work book in the file
-                var workBook = package.Workbook;
-                if (workBook != null)
+                List<Atm> atms = new List<Atm>();
+
+                // Get the file we are going to process
+                var existingFile = new FileInfo(filePath);
+                // Open and read the XlSX file.
+                using (var package = new ExcelPackage(existingFile))
                 {
-                    if (workBook.Worksheets.Count > 0)
+                    // Get the work book in the file
+                    var workBook = package.Workbook;
+                    if (workBook != null)
                     {
-                        // Get the inventory worksheet
-                        var worksheet = workBook.Worksheets["SCCM"];
-
-                        // read some data
-                        object col1Header = worksheet.Cells[1, 1].Value;
-
-                        int rows = worksheet.Dimension.Rows;
-                        for (int i = 2; i <= rows; i++)
+                        if (workBook.Worksheets.Count > 0)
                         {
-                            var customer = worksheet.Cells[i, 5].Value;
-                            var atmName = worksheet.Cells[i, 1].Value;
-                            var software = worksheet.Cells[i, 3].Value; // for SCCM it pulls InstallTime0 column
-                            var version = worksheet.Cells[i, 4].Value;
-                            var date = worksheet.Cells[i, 2].Value;
+                            // Get the inventory worksheet
+                            var worksheet = workBook.Worksheets["SCCM"];
 
-                            if (software != null)
+                            // read some data
+                            object col1Header = worksheet.Cells[1, 1].Value;
+
+                            int rows = worksheet.Dimension.Rows;
+                            for (int i = 2; i <= rows; i++)
                             {
+                                var customer = worksheet.Cells[i, 5].Value;
+                                var atmName = worksheet.Cells[i, 1].Value;
+                                var software = worksheet.Cells[i, 3].Value; // for SCCM it pulls InstallTime0 column
+                                var version = worksheet.Cells[i, 4].Value;
+                                var date = worksheet.Cells[i, 2].Value;
+
+                                if (software != null)
+                                {
+                                    if (!atms.Exists(x => x.Name == atmName.ToString()))
+                                    {
+                                        Atm atm = new Atm();
+                                        if (customer != null) atm.Customer = customer.ToString();
+                                        if (atmName != null) atm.Name = atmName.ToString();
+                                        if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);
+                                        atms.Add(atm);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+                return atms;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static List<Atm> ImprortAtmDataFromSharepoint(string filePath)
+        {
+            try
+            {
+                List<Atm> atms = new List<Atm>();
+
+                // Get the file we are going to process
+                var existingFile = new FileInfo(filePath);
+                // Open and read the XlSX file.
+                using (var package = new ExcelPackage(existingFile))
+                {
+                    // Get the work book in the file
+                    var workBook = package.Workbook;
+                    if (workBook != null)
+                    {
+                        if (workBook.Worksheets.Count > 0)
+                        {
+                            // Get the inventory worksheet
+                            var worksheet = workBook.Worksheets.First();
+
+                            // read some data
+                            object col1Header = worksheet.Cells[1, 1].Value;
+
+                            int rows = worksheet.Dimension.Rows;
+                            for (int i = 2; i <= rows; i++)
+                            {
+                                var customer = worksheet.Cells[i, 1].Value;
+                                var atmName = worksheet.Cells[i, 3].Value;
+                                var version = worksheet.Cells[i, 4].Value;
+
                                 if (!atms.Exists(x => x.Name == atmName.ToString()))
                                 {
                                     Atm atm = new Atm();
                                     if (customer != null) atm.Customer = customer.ToString();
                                     if (atmName != null) atm.Name = atmName.ToString();
-                                    if (version != null) atm.AptraCD2Version = version.ToString().Substring(6);                                    
+                                    if (version != null) atm.AptraCD2Version = version.ToString(); // Dusan debug
                                     atms.Add(atm);
                                 }
-                            }
 
+                            }
                         }
                     }
                 }
+                return atms;
             }
-            return atms;
-        }
-
-        public static List<Atm> ImprortAtmDataFromSharepoint(string filePath)
-        {
-            List<Atm> atms = new List<Atm>();
-
-            // Get the file we are going to process
-            var existingFile = new FileInfo(filePath);
-            // Open and read the XlSX file.
-            using (var package = new ExcelPackage(existingFile))
+            catch (Exception ex)
             {
-                // Get the work book in the file
-                var workBook = package.Workbook;
-                if (workBook != null)
-                {
-                    if (workBook.Worksheets.Count > 0)
-                    {
-                        // Get the inventory worksheet
-                        var worksheet = workBook.Worksheets.First();
 
-                        // read some data
-                        object col1Header = worksheet.Cells[1, 1].Value;
-
-                        int rows = worksheet.Dimension.Rows;
-                        for (int i = 2; i <= rows; i++)
-                        {
-                            var customer = worksheet.Cells[i, 1].Value;
-                            var atmName = worksheet.Cells[i, 3].Value;
-                            var version = worksheet.Cells[i, 4].Value;
-
-                            if (!atms.Exists(x => x.Name == atmName.ToString()))
-                            {
-                                Atm atm = new Atm();
-                                if (customer != null) atm.Customer = customer.ToString();
-                                if (atmName != null) atm.Name = atmName.ToString();
-                                if (version != null) atm.AptraCD2Version = version.ToString(); // Dusan debug
-                                atms.Add(atm);
-                            }
-
-                        }
-                    }
-                }
+                throw ex;
             }
-            return atms;
         }
 
         public static string ExportDataToExcel(string fileName, DataTable dataTable, DirectoryInfo outputDir)
         {
-            FileInfo newFile = new FileInfo(outputDir.FullName + string.Format(@"\{0}.xlsx", fileName));
-            if (newFile.Exists)
+            try
             {
-                newFile.Delete();  // ensures we create a new workbook
-                newFile = new FileInfo(outputDir.FullName + string.Format(@"\{0}.xlsx", fileName));
-            }
-
-            using (ExcelPackage package = new ExcelPackage(newFile))
-            {
-                // add a new worksheet to the empty workbook
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Output");
-
-                DataTable dt = new DataTable();
-                dt = dataTable;
-                int dt_numberOfRows = dataTable.Rows.Count;
-                int dt_numberOfColumns = dataTable.Columns.Count;
-                int i = 1, j = 1;
-
-                //Add column names to excel
-                IEnumerable<string> columnNames = dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName);
-                foreach (string columnName in columnNames)
+                FileInfo newFile = new FileInfo(outputDir.FullName + string.Format(@"\{0}.xlsx", fileName));
+                if (newFile.Exists)
                 {
-                    worksheet.Cells[1, i++].Value = columnName;
+                    newFile.Delete();  // ensures we create a new workbook
+                    newFile = new FileInfo(outputDir.FullName + string.Format(@"\{0}.xlsx", fileName));
                 }
 
-                //populate excel with data
-                for (int a = 0; a < dt_numberOfRows; a++)
+                using (ExcelPackage package = new ExcelPackage(newFile))
                 {
-                    for (int b = 0; b < dt_numberOfColumns; b++)
+                    // add a new worksheet to the empty workbook
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Output");
+
+                    DataTable dt = new DataTable();
+                    dt = dataTable;
+                    int dt_numberOfRows = dataTable.Rows.Count;
+                    int dt_numberOfColumns = dataTable.Columns.Count;
+                    int i = 1, j = 1;
+
+                    //Add column names to excel
+                    IEnumerable<string> columnNames = dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName);
+                    foreach (string columnName in columnNames)
                     {
-                        worksheet.Cells[a + 2, b + 1].Value = dataTable.Rows[a][b].ToString();
+                        worksheet.Cells[1, i++].Value = columnName;
                     }
+
+                    //populate excel with data
+                    for (int a = 0; a < dt_numberOfRows; a++)
+                    {
+                        for (int b = 0; b < dt_numberOfColumns; b++)
+                        {
+                            worksheet.Cells[a + 2, b + 1].Value = dataTable.Rows[a][b].ToString();
+                        }
+                    }
+
+                    //format excel sheet
+                    //Set a border around
+                    worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[1, 1, 1, dt_numberOfColumns].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    worksheet.Cells[1, 1, 1, dt_numberOfColumns].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                    //format document
+                    worksheet.Cells.AutoFitColumns(0);  //Autofit columns for all cells
+
+                    // set some document properties
+                    package.Workbook.Properties.Title = fileName;
+
+                    // set some extended property values
+                    package.Workbook.Properties.Company = "NCR";
+
+                    // save our new workbook and we are done!
+                    package.Save();
                 }
 
-                //format excel sheet
-                //Set a border around
-                worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[1, 1, dt_numberOfRows + 1, dt_numberOfColumns].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[1, 1, 1, dt_numberOfColumns].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                worksheet.Cells[1, 1, 1, dt_numberOfColumns].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-                //format document
-                worksheet.Cells.AutoFitColumns(0);  //Autofit columns for all cells
-
-                // set some document properties
-                package.Workbook.Properties.Title = fileName;
-
-                // set some extended property values
-                package.Workbook.Properties.Company = "NCR";
-
-                // save our new workbook and we are done!
-                package.Save();
+                return newFile.FullName;
             }
-
-            return newFile.FullName;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -260,7 +290,7 @@ namespace DataValidator
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }
