@@ -56,6 +56,7 @@ namespace DataValidator
             try
             {
                 this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
+                this.NotExistAtms.Clear(); // Clear to prevent duplicate records.
                 var SCCMAtms = ExcelManager.ImprortAtmDataFromSCCMReport(@"C:\SCCM.xlsx");
                 var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
                 SWDTool = "DifferentMUPSCCM";
@@ -126,6 +127,7 @@ namespace DataValidator
             try
             {
                 this.DifferentAtms.Clear(); // Dusan obrisi kolekciju
+                this.NotExistAtms.Clear(); // Clear to prevent duplicate records.
                 var epmAtms = ExcelManager.ImprortAtmDataFromEpmReport(@"C:\EPM.xlsx");
                 var siteAtms = ExcelManager.ImprortAtmDataFromSharepoint(@"C:\Atms.xlsx");
                 SWDTool = "DifferentMUPEpm";
