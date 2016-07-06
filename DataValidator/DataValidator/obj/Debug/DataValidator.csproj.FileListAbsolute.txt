@@ -26,8 +26,6 @@ C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataVa
 C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataValidator.pdb
 C:\Users\DJ250153\AppData\Dokumenta\DataValidator\DataValidator\obj\Debug\DataValidator.csprojResolveAssemblyReference.cache
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.exe.config
-C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.exe
-C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.pdb
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.exe
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.pdb
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\EPPlus.dll
@@ -52,3 +50,9 @@ C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\MainWindow.baml
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.g.resources
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.Properties.Resources.resources
 C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.csproj.GenerateResource.Cache
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.exe
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.pdb
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.exe.manifest
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\bin\Debug\DataValidator.application
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.exe.manifest
+C:\Users\DJ250153\NCR_GIT\DataValidator\DataValidator\obj\Debug\DataValidator.application
